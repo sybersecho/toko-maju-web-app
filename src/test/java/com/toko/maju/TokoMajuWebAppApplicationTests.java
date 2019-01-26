@@ -1,12 +1,10 @@
 package com.toko.maju;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 public class TokoMajuWebAppApplicationTests {
 
 	@Test
@@ -14,4 +12,3 @@ public class TokoMajuWebAppApplicationTests {
 	}
 
 }
-

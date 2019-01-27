@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDTO findId(Long id) {
+	public CustomerDTO findById(Long id) {
 		return customerMapper.customerToCustomerDTO(customerRepo.getOne(id));
 	}
 

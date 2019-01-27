@@ -9,5 +9,5 @@ public interface CustomerService {
 
 	public List<CustomerDTO> getAllCustomers();
 
-	public CustomerDTO findId(Long id);
+	public CustomerDTO findById(Long id);
 }

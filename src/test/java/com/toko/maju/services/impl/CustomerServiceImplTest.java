@@ -62,11 +62,11 @@ class CustomerServiceImplTest {
 
 	@Test
 	void findId() {
-		when(customerService.findId(any())).thenReturn(testCustomer);
+		when(customerService.findById(any())).thenReturn(testCustomer);
 
-		CustomerDTO found = customerService.findId(anyLong());
+		CustomerDTO found = customerService.findById(anyLong());
 		assertEquals(found.getId(), testCustomer.getId());
-		verify(customerService, times(1)).findId(anyLong());
+		verify(customerService, times(1)).findById(anyLong());
 	}
 
 }

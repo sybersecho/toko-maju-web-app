@@ -1,5 +1,8 @@
 package com.toko.maju.services.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.toko.maju.api.v1.mapper.CustomerMapper;
@@ -25,6 +28,16 @@ public class CustomerServiceImpl implements CustomerService {
 		toSave = customerRepo.save(toSave);
 		CustomerDTO dto = customerMapper.customerToCustomerDTO(toSave);
 		return dto;
+	}
+
+	@Override
+	public List<CustomerDTO> getAllCustomers() {
+		return customerRepo.findAll().stream().map(customerMapper::customerToCustomerDTO).collect(Collectors.toList());
+	}
+
+	@Override
+	public CustomerDTO findId(Long id) {
+		return customerMapper.customerToCustomerDTO(customerRepo.getOne(id));
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.toko.maju.services.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,13 +16,10 @@ import org.mockito.MockitoAnnotations;
 
 import com.toko.maju.api.v1.mapper.CustomerMapper;
 import com.toko.maju.api.v1.model.CustomerDTO;
-import com.toko.maju.domains.Customer;
 import com.toko.maju.repositories.CustomerRepo;
 import com.toko.maju.services.CustomerService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+//@Slf4j
 class CustomerServiceImplTest {
 
 	@Mock
@@ -39,14 +36,12 @@ class CustomerServiceImplTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-//		customerService = new CustomerServiceImpl(customerRepo, customerMapper);
 		testCustomer = CustomerDTO.builder().id(1L).build();
 
 	}
 
 	@Test
 	void testSave() {
-//		CustomerDTO toSaved = CustomerDTO.builder().id(1L).build();
 		when(customerService.save(any())).thenReturn(testCustomer);
 
 		CustomerDTO savedCustomer = customerService.save(any());
@@ -57,12 +52,21 @@ class CustomerServiceImplTest {
 	}
 
 	@Test
-	void findAll() {
-		List<Customer> customers = Arrays.asList(new Customer(), new Customer());
-		when(customerRepo.findAll()).thenReturn(customers);
-		log.debug("has error");
-		assertEquals(2, customerRepo.findAll().size());
+	void getAllCustomers() {
+		List<CustomerDTO> customers = Arrays.asList(new CustomerDTO(), new CustomerDTO());
+		when(customerService.getAllCustomers()).thenReturn(customers);
 
+		assertEquals(2, customerService.getAllCustomers().size());
+		verify(customerService, times(1)).getAllCustomers();
+	}
+
+	@Test
+	void findId() {
+		when(customerService.findId(any())).thenReturn(testCustomer);
+
+		CustomerDTO found = customerService.findId(anyLong());
+		assertEquals(found.getId(), testCustomer.getId());
+		verify(customerService, times(1)).findId(anyLong());
 	}
 
 }

@@ -30,8 +30,8 @@ public class BootStrap implements CommandLineRunner {
 		CustomerDTO customer2 = CustomerDTO.builder().name("Customer 2").code("Code 2").address("address 2")
 				.build();
 		
-		customerService.save(customer1);
-		customerService.save(customer2);
+		customerService.saveNewCustomer(customer1);
+		customerService.saveNewCustomer(customer2);
 		
 		log.debug("customer loaded");
 

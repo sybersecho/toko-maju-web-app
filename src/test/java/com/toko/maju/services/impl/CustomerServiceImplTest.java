@@ -42,12 +42,23 @@ class CustomerServiceImplTest {
 
 	@Test
 	void testSave() {
-		when(customerService.save(any())).thenReturn(testCustomer);
+		when(customerService.saveNewCustomer(any())).thenReturn(testCustomer);
 
-		CustomerDTO savedCustomer = customerService.save(any());
+		CustomerDTO savedCustomer = customerService.saveNewCustomer(any());
 		assertEquals(testCustomer.getId(), savedCustomer.getId());
 
-		verify(customerService, times(1)).save(any());
+		verify(customerService, times(1)).saveNewCustomer(any());
+
+	}
+	
+	@Test
+	void testUpdate() {
+		when(customerService.saveNewCustomer(any())).thenReturn(testCustomer);
+
+		CustomerDTO savedCustomer = customerService.saveNewCustomer(any());
+		assertEquals(testCustomer.getId(), savedCustomer.getId());
+
+		verify(customerService, times(1)).saveNewCustomer(any());
 
 	}
 

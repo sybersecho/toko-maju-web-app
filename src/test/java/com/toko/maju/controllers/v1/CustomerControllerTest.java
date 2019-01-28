@@ -2,9 +2,12 @@ package com.toko.maju.controllers.v1;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -75,15 +78,27 @@ class CustomerControllerTest {
 		CustomerDTO returnCustomer = CustomerDTO.builder().id(customer1.getId()).name(customer1.getName())
 				.code(customer1.getCode()).address(customer1.getAddress()).build();
 
-		when(customerService.save(customer1)).thenReturn(returnCustomer);
+		when(customerService.saveNewCustomer(customer1)).thenReturn(returnCustomer);
 
-		mockMvc.perform(post(CustomerController.BASE_URL + "/")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(asJsonString(customer1)))
-				.andExpect(jsonPath("$.name", equalTo("Customer 1")));
+		mockMvc.perform(post(CustomerController.BASE_URL + "/").contentType(MediaType.APPLICATION_JSON)
+				.content(asJsonString(customer1))).andExpect(jsonPath("$.name", equalTo("Customer 1")));
 	}
 
-	public static String asJsonString(final Object obj) {
+	@Test
+	void testUpdateCustomer() throws Exception {
+		CustomerDTO customer1 = CustomerDTO.builder().id(1L).name("Customer 1").code("Code 1").address("address 1")
+				.build();
+
+		CustomerDTO returnCustomer = CustomerDTO.builder().id(customer1.getId()).name(customer1.getName())
+				.code(customer1.getCode()).address(customer1.getAddress()).build();
+
+		when(customerService.saveCustomerByDTO(anyLong(), any())).thenReturn(returnCustomer);
+
+		mockMvc.perform(put(CustomerController.BASE_URL + "/1").contentType(MediaType.APPLICATION_JSON)
+				.content(asJsonString(customer1))).andExpect(jsonPath("$.name", equalTo("Customer 1")));
+	}
+
+	private static String asJsonString(final Object obj) {
 		try {
 			final ObjectMapper mapper = new ObjectMapper();
 			final String jsonContent = mapper.writeValueAsString(obj);

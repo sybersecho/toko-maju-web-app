@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,7 +48,15 @@ public class CustomerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public CustomerDTO createNewCustomer(@RequestBody CustomerDTO newCustomer) {
 		log.debug("saving new customer");
-		return customerService.save(newCustomer);
+		return customerService.saveNewCustomer(newCustomer);
+	}
+	
+
+	@PutMapping({"/{id}"})
+	@ResponseStatus(HttpStatus.OK)
+	public CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO updateCustomer) {
+		log.debug("update customer with ID: " + id);
+		return customerService.saveCustomerByDTO(id, updateCustomer);
 	}
 
 }

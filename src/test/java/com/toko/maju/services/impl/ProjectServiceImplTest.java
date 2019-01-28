@@ -39,12 +39,12 @@ class ProjectServiceImplTest {
 	@Test
 	void testSave() {
 		log.debug("testing save project...");
-		when(projectService.save(any())).thenReturn(sampleProject);
+		when(projectService.saveNewProject(any())).thenReturn(sampleProject);
 
-		ProjectDTO dto = projectService.save(any());
+		ProjectDTO dto = projectService.saveNewProject(any());
 		assertEquals(dto.getId(), sampleProject.getId());
 
-		verify(projectService, times(1)).save(any());
+		verify(projectService, times(1)).saveNewProject(any());
 //		verify(projectRepo, timeout(1)).save(any());
 
 	}

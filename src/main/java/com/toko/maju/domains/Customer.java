@@ -1,11 +1,23 @@
 package com.toko.maju.domains;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer extends BaseEntity {
@@ -19,6 +31,7 @@ public class Customer extends BaseEntity {
 	private String address;
 	private String phoneNumber;
 	
-//	private
+	@OneToMany(cascade=CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
+	private Set<Project> projects = new HashSet<Project>();
 
 }

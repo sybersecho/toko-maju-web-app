@@ -1,5 +1,7 @@
 package com.toko.maju.api.v1.model;
 
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +17,5 @@ public class CustomerDTO {
 	private String name;
 	private String address;
 	private String phoneNumber;
+	private Set<ProjectDTO> projects;
 }

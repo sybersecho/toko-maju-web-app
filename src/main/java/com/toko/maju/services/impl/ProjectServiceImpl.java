@@ -1,5 +1,10 @@
 package com.toko.maju.services.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.toko.maju.api.v1.mapper.ProjectMapper;
@@ -20,10 +25,21 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ProjectDTO save(ProjectDTO newProject) {
-		Project toBeSave = projectMap.toProject(newProject);
-		toBeSave = projectRepo.save(toBeSave);
-		return projectMap.toProjectDTO(toBeSave);
+	@Transactional
+	public ProjectDTO saveNewProject(ProjectDTO newProject) {
+		return saveAndReturnDTO(projectMap.toProject(newProject));
+	}
+
+	private ProjectDTO saveAndReturnDTO(Project project) {
+		Project saved = projectRepo.save(project);
+		ProjectDTO dto = projectMap.toProjectDTO(saved);
+		return dto;
+	}
+
+	@Override
+	public List<ProjectDTO> getAllProjects() {
+		//customerRepo.findAll().stream().map(customerMapper::customerToCustomerDTO).collect(Collectors.toList());
+		return projectRepo.findAll().stream().map(projectMap::toProjectDTO).collect(Collectors.toList());
 	}
 
 }

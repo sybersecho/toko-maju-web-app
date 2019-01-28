@@ -1,6 +1,7 @@
 package com.toko.maju.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -23,5 +24,8 @@ public class Project extends BaseEntity {
 
 	private String name;
 	private String address;
+	
+	@ManyToOne
+	private Customer customer;
 
 }

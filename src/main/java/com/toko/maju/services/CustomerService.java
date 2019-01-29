@@ -2,14 +2,14 @@ package com.toko.maju.services;
 
 import java.util.List;
 
-import com.toko.maju.api.v1.model.CustomerDTO;
+import com.toko.maju.domains.v1.Customer;
 
 public interface CustomerService {
-	public CustomerDTO saveNewCustomer(CustomerDTO newCustomer);
+	public Customer saveNewCustomer(Customer newCustomer);
 
-	public List<CustomerDTO> getAllCustomers();
+	public List<Customer> getAllCustomers();
 
-	public CustomerDTO findById(Long id);
+	public Customer findById(Long id);
 	
-	public CustomerDTO saveCustomerByDTO(Long id, CustomerDTO updateCustomer);
+	public Customer saveCustomerById(Long id, Customer updateCustomer);
 }

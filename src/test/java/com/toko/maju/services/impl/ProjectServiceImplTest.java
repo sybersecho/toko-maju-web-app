@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.toko.maju.api.v1.mapper.ProjectMapper;
-import com.toko.maju.api.v1.model.ProjectDTO;
+import com.toko.maju.domains.v1.Project;
 import com.toko.maju.repositories.ProjectRepo;
 import com.toko.maju.services.ProjectService;
 
@@ -23,17 +22,16 @@ class ProjectServiceImplTest {
 
 	@Mock
 	ProjectRepo projectRepo;
-	@Mock
-	ProjectMapper projectMap;
+
 	@Mock
 	ProjectService projectService;
 
-	ProjectDTO sampleProject;
+	Project sampleProject;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		sampleProject = ProjectDTO.builder().id(1L).build();
+		sampleProject = Project.builder().name("name").build();
 	}
 
 	@Test
@@ -41,7 +39,7 @@ class ProjectServiceImplTest {
 		log.debug("testing save project...");
 		when(projectService.saveNewProject(any())).thenReturn(sampleProject);
 
-		ProjectDTO dto = projectService.saveNewProject(any());
+		Project dto = projectService.saveNewProject(any());
 		assertEquals(dto.getId(), sampleProject.getId());
 
 		verify(projectService, times(1)).saveNewProject(any());

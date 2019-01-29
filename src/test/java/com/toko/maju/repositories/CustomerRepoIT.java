@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.toko.maju.domains.Customer;
+import com.toko.maju.domains.v1.Customer;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

@@ -1,4 +1,4 @@
-package com.toko.maju.domains;
+package com.toko.maju.domains.v1;
 
 import java.io.Serializable;
 

@@ -1,5 +1,7 @@
 package com.toko.maju.controllers.v1;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.toko.maju.api.v1.model.CustomerDTO;
-import com.toko.maju.api.v1.model.CustomerListDTO;
+import com.toko.maju.domains.v1.Customer;
 import com.toko.maju.services.CustomerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,32 +32,31 @@ public class CustomerController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public CustomerListDTO getAllCustomers(Model model) {
+	public List<Customer> getAllCustomers(Model model) {
 		log.debug("calling getAllCustomers...");
 
-		return new CustomerListDTO(customerService.getAllCustomers());
+		return customerService.getAllCustomers();
 	}
 
-	@GetMapping({"/{id}"})
+	@GetMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public CustomerDTO getById(@PathVariable Long id) {
+	public Customer getById(@PathVariable Long id) {
 		log.debug("calling getByID: " + id);
 		return customerService.findById(id);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CustomerDTO createNewCustomer(@RequestBody CustomerDTO newCustomer) {
+	public Customer createNewCustomer(@RequestBody Customer newCustomer) {
 		log.debug("saving new customer");
 		return customerService.saveNewCustomer(newCustomer);
 	}
-	
 
-	@PutMapping({"/{id}"})
+	@PutMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO updateCustomer) {
+	public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer updateCustomer) {
 		log.debug("update customer with ID: " + id);
-		return customerService.saveCustomerByDTO(id, updateCustomer);
+		return customerService.saveCustomerById(id, updateCustomer);
 	}
 
 }

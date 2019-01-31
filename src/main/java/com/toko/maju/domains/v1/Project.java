@@ -11,9 +11,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-//@AllArgsConstructor
 @NoArgsConstructor
-//@Builder
 @Entity
 @Table(name = "project")
 public class Project extends BaseEntity {

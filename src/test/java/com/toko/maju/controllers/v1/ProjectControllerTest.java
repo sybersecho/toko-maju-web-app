@@ -52,14 +52,14 @@ class ProjectControllerTest {
 
 	@Test
 	void testGetProjectById() throws Exception {
-		Project project1 = Project.builder().id(1L).build();
+		Project project1 = Project.builder().id(1L).name("Project 1").build();
 		
 		when(service.findById(1L)).thenReturn(project1);
 
-		mockMvc.perform(get(CustomerController.BASE_URL + "/1")
+		mockMvc.perform(get(ProjectController.BASE_URL + "/1")
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk());
-			//.andExpect(jsonPath("$.name", equalTo("Customer 1")));
+			//.andExpect(jsonPath("$.name", equalTo("Project 1")));
 
 	}
 
@@ -70,7 +70,7 @@ class ProjectControllerTest {
 		
 		when(service.save(project1)).thenReturn(returned);
 		
-		mockMvc.perform(post(CustomerController.BASE_URL + "/")
+		mockMvc.perform(post(ProjectController.BASE_URL + "/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(project1)))
 			.andExpect(status().isCreated());
@@ -83,7 +83,7 @@ class ProjectControllerTest {
 		
 		when(service.updateById(anyLong(), any())).thenReturn(returned);
 		
-		mockMvc.perform(post(CustomerController.BASE_URL + "/")
+		mockMvc.perform(post(ProjectController.BASE_URL + "/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(project1)))
 			.andExpect(status().isCreated());

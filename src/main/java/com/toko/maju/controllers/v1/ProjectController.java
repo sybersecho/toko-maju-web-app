@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +20,8 @@ import com.toko.maju.services.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController(ProjectController.BASE_URL)
+@RestController
+@RequestMapping(value = { ProjectController.BASE_URL })
 public class ProjectController {
 	public static final String BASE_URL = "/api/v1/projects";
 
@@ -43,16 +46,16 @@ public class ProjectController {
 		return service.findById(id);
 	}
 
-	@PostMapping
+	@PostMapping(value = "/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Project saveProject(Project newProject) {
+	public Project saveProject(@RequestBody Project newProject) {
 		log.debug("save new project");
 		return service.save(newProject);
 	}
 
 	@PutMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public Project updateProject(Long id, Project updateProject) {
+	public Project updateProject(@PathVariable Long id, @RequestBody Project updateProject) {
 		log.debug("update project wiht id: {}", id);
 		return service.updateById(id, updateProject);
 	}

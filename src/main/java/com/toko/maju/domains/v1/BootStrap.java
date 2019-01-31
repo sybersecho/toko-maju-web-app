@@ -1,10 +1,12 @@
 package com.toko.maju.domains.v1;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.toko.maju.services.CustomerService;
 import com.toko.maju.services.ProjectService;
+import com.toko.maju.services.SupplierService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,6 +16,9 @@ public class BootStrap implements CommandLineRunner {
 
 	private final CustomerService customerService;
 	private final ProjectService projectService;
+	@SuppressWarnings("unused")
+	@Autowired
+	private final SupplierService supplierService=null;
 
 	public BootStrap(CustomerService customerService, ProjectService projectService) {
 		this.customerService = customerService;
@@ -24,7 +29,21 @@ public class BootStrap implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		loadCustomer();
 		loadProjects();
+		loadSupplier();
 
+	}
+
+	private void loadSupplier() {
+		Supplier supplier = Supplier.builder()
+				.id(1L)
+				.address("address")
+				.bankAccount("bank account")
+				.bankName("bank name")
+				.code("code")
+				.name("Supplier name")
+				.phoneNumber("12312313")
+				.build();
+		supplierService.save(supplier);
 	}
 
 	private void loadProjects() {

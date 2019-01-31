@@ -31,7 +31,7 @@ class ProjectServiceIT {
 	@BeforeEach
 	@Transactional
 	void setUp() throws Exception {
-		customer = Customer.builder().address("Address").build();
+		customer = Customer.builder().id(1L).address("Address").build();
 		customer = customerService.saveNewCustomer(customer);
 		saveProject();
 	}
@@ -48,16 +48,17 @@ class ProjectServiceIT {
 	void testFindOne() {
 //		saveProject();
 
-		Project founDto = projectService.getAllProjects().get(0);
+		Project found = projectService.getAllProjects().iterator().next();
 
-		assertNotNull(founDto);
+		assertNotNull(found);
 	}
 
 	private Project saveProject() {
-		Project dto = Project.builder().address("address").name("name").customer(customerService.getAllCustomers().get(0)).build();
+		Project project = Project.builder().address("address").name("name")
+				.customer(customerService.getAllCustomers().iterator().next()).build();
 
-		dto = projectService.saveNewProject(dto);
-		return dto;
+		project = projectService.saveNewProject(project);
+		return project;
 	}
 
 }

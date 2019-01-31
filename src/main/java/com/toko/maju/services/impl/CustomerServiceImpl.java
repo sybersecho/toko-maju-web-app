@@ -1,6 +1,7 @@
 package com.toko.maju.services.impl;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,6 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerServiceImpl(CustomerRepo customerRepo) {
 		this.customerRepo = customerRepo;
 	}
-//	public CustomerServiceImpl(CustomerRepo customerRepo, CustomerMapper customerMapper) {
-//		this.customerRepo = customerRepo;
-//		this.customerMapper = customerMapper;
-//		toDTO = null;
-//		fromDTO = null;
-//	}
 
 	@Override
 	public Customer saveNewCustomer(Customer newCustomer) {
@@ -29,19 +24,31 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> getAllCustomers() {
-		return customerRepo.findAll();
+	public Set<Customer> getAllCustomers() {
+		Set<Customer> customers = new HashSet<Customer>();
+		customerRepo.findAll().forEach(customers::add);
+		return customers;
 	}
 
 	@Override
 	public Customer findById(Long id) {
-		return customerRepo.getOne(id);
+		return customerRepo.findById(id).orElse(null);
 	}
 
 	@Override
 	public Customer saveCustomerById(Long id, Customer updateCustomer) {
 		updateCustomer.setId(id);
 		return customerRepo.save(updateCustomer);
+	}
+
+	@Override
+	public void delete(Customer delete) {
+		customerRepo.delete(delete);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		customerRepo.deleteById(id);
 	}
 
 }

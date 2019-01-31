@@ -1,6 +1,6 @@
 package com.toko.maju.controllers.v1;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -32,7 +32,7 @@ public class CustomerController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Customer> getAllCustomers(Model model) {
+	public Set<Customer> getAllCustomers(Model model) {
 		log.debug("calling getAllCustomers...");
 
 		return customerService.getAllCustomers();

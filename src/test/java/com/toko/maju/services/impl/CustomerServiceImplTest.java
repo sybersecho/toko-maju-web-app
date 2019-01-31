@@ -7,8 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,9 +59,12 @@ class CustomerServiceImplTest {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Test
 	void getAllCustomers() {
-		List<Customer> customers = Arrays.asList(new Customer(), new Customer());
+		Set<Customer> customers = new HashSet<Customer>();
+		customers.add(new Customer().builder().id(1L).address("address 1").build());
+		customers.add(new Customer().builder().id(2L).address("Address 2").build());
 		when(customerService.getAllCustomers()).thenReturn(customers);
 
 		assertEquals(2, customerService.getAllCustomers().size());

@@ -1,6 +1,7 @@
 package com.toko.maju.services.impl;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -26,8 +27,33 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Project> getAllProjects() {
-		return projectRepo.findAll();
+	public Set<Project> getAllProjects() {
+		Set<Project> projects = new HashSet<Project>();
+		projectRepo.findAll().forEach(projects::add);
+		return projects;
+	}
+
+	@Override
+	public Project findById(Long id) {
+		return projectRepo.findById(id).orElse(null);
+	}
+
+	@Override
+	public Project saveProjectById(Long id, Project updated) {
+		updated.setId(id);
+		return projectRepo.save(updated);
+	}
+
+	@Override
+	public void delete(Project project) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

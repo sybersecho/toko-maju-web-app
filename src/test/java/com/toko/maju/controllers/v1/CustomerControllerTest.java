@@ -1,7 +1,6 @@
 package com.toko.maju.controllers.v1;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -11,8 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,12 +44,12 @@ class CustomerControllerTest {
 
 	@Test
 	void testListCustomers() throws Exception {
-		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1")
-				.build();
-		Customer customer2 = Customer.builder().name("Customer 2").code("Code 2").address("address 2")
-				.build();
+		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1").build();
+		Customer customer2 = Customer.builder().name("Customer 2").code("Code 2").address("address 2").build();
 
-		List<Customer> customers = Arrays.asList(customer1, customer2);
+		Set<Customer> customers = new HashSet<Customer>();
+		customers.add(customer1);
+		customers.add(customer2);
 		when(customerService.getAllCustomers()).thenReturn(customers);
 
 		mockMvc.perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
@@ -60,8 +59,7 @@ class CustomerControllerTest {
 
 	@Test
 	void testGetById() throws Exception {
-		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1")
-				.build();
+		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1").build();
 
 		when(customerService.findById(1L)).thenReturn(customer1);
 
@@ -72,11 +70,10 @@ class CustomerControllerTest {
 
 	@Test
 	void testSaveNewCustomer() throws Exception {
-		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1")
-				.build();
+		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1").build();
 
-		Customer returnCustomer = Customer.builder().name(customer1.getName())
-				.code(customer1.getCode()).address(customer1.getAddress()).build();
+		Customer returnCustomer = Customer.builder().name(customer1.getName()).code(customer1.getCode())
+				.address(customer1.getAddress()).build();
 
 		when(customerService.saveNewCustomer(customer1)).thenReturn(returnCustomer);
 
@@ -86,11 +83,10 @@ class CustomerControllerTest {
 
 	@Test
 	void testUpdateCustomer() throws Exception {
-		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1")
-				.build();
+		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1").build();
 
-		Customer returnCustomer = Customer.builder().name(customer1.getName())
-				.code(customer1.getCode()).address(customer1.getAddress()).build();
+		Customer returnCustomer = Customer.builder().name(customer1.getName()).code(customer1.getCode())
+				.address(customer1.getAddress()).build();
 
 		when(customerService.saveCustomerById(anyLong(), any())).thenReturn(returnCustomer);
 

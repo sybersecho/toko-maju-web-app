@@ -1,17 +1,10 @@
 package com.toko.maju.services;
 
-import com.toko.maju.domains.v1.Customer;
+import java.util.Set;
 
-public interface CustomerService extends IService<Customer, Long>{
-//	public Customer saveNewCustomer(Customer newCustomer);
-//
-//	public Set<Customer> getAllCustomers();
-//
-//	public Customer findById(Long id);
-//
-//	public Customer saveCustomerById(Long id, Customer updateCustomer);
-//
-//	public void delete(Customer delete);
-//
-//	public void deleteById(Long id);
+import com.toko.maju.domains.v1.Customer;
+import com.toko.maju.domains.v1.Project;
+
+public interface CustomerService extends IService<Customer, Long> {
+	public Set<Project> customerProjects(Long id);
 }

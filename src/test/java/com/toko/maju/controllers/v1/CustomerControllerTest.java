@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -52,8 +53,10 @@ class CustomerControllerTest {
 		customers.add(customer2);
 		when(customerService.getAll()).thenReturn(customers);
 
-		mockMvc.perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
+		mockMvc.perform(get(CustomerController.BASE_URL)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
+			//.andExpect(jsonPath("$.customers", hasSize(2)));;
 
 	}
 
@@ -92,6 +95,13 @@ class CustomerControllerTest {
 
 		mockMvc.perform(put(CustomerController.BASE_URL + "/1").contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(customer1))).andExpect(jsonPath("$.name", equalTo("Customer 1")));
+	}
+	
+	@Test
+	void deleteCustomer() throws Exception {
+		
+		mockMvc.perform(delete(CustomerController.BASE_URL + "/1"))
+			.andExpect(status().isOk());
 	}
 
 	private static String asJsonString(final Object obj) {

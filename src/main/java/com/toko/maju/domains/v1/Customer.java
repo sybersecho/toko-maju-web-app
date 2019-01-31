@@ -5,9 +5,10 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +31,8 @@ public class Customer extends BaseEntity {
 	private String address;
 	private String phoneNumber;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
 	private Set<Project> projects = new HashSet<Project>();
 
 	@Builder

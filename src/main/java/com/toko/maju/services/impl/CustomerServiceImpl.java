@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.toko.maju.domains.v1.Customer;
+import com.toko.maju.domains.v1.Project;
 import com.toko.maju.repositories.CustomerRepo;
 import com.toko.maju.services.CustomerService;
 
@@ -51,6 +52,12 @@ public class CustomerServiceImpl implements CustomerService {
 		Set<Customer> customers = new HashSet<Customer>();
 		customerRepo.findAll().forEach(customers::add);
 		return customers;
+	}
+
+	@Override
+	public Set<Project> customerProjects(Long id) {
+		// TODO CHECK IF CUSTOMER EXIST FIRST
+		return customerRepo.findById(id).get().getProjects();
 	}
 
 }

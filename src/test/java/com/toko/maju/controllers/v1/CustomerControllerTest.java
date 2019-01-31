@@ -50,7 +50,7 @@ class CustomerControllerTest {
 		Set<Customer> customers = new HashSet<Customer>();
 		customers.add(customer1);
 		customers.add(customer2);
-		when(customerService.getAllCustomers()).thenReturn(customers);
+		when(customerService.getAll()).thenReturn(customers);
 
 		mockMvc.perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
@@ -75,7 +75,7 @@ class CustomerControllerTest {
 		Customer returnCustomer = Customer.builder().name(customer1.getName()).code(customer1.getCode())
 				.address(customer1.getAddress()).build();
 
-		when(customerService.saveNewCustomer(customer1)).thenReturn(returnCustomer);
+		when(customerService.save(customer1)).thenReturn(returnCustomer);
 
 		mockMvc.perform(post(CustomerController.BASE_URL + "/").contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(customer1)));
@@ -88,7 +88,7 @@ class CustomerControllerTest {
 		Customer returnCustomer = Customer.builder().name(customer1.getName()).code(customer1.getCode())
 				.address(customer1.getAddress()).build();
 
-		when(customerService.saveCustomerById(anyLong(), any())).thenReturn(returnCustomer);
+		when(customerService.updateById(anyLong(), any())).thenReturn(returnCustomer);
 
 		mockMvc.perform(put(CustomerController.BASE_URL + "/1").contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(customer1))).andExpect(jsonPath("$.name", equalTo("Customer 1")));

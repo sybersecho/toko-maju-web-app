@@ -46,8 +46,8 @@ public class BootStrap implements CommandLineRunner {
 		Customer customer1 = Customer.builder().name("Customer 1").code("Code 1").address("address 1").build();
 		Customer customer2 = Customer.builder().name("Customer 2").code("Code 2").address("address 2").build();
 
-		customer1 = customerService.saveNewCustomer(customer1);
-		customer2 = customerService.saveNewCustomer(customer2);
+//		customer1 = customerService.saveNewCustomer(customer1);
+//		customer2 = customerService.saveNewCustomer(customer2);
 
 		log.debug("customer loaded");
 

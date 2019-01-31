@@ -39,23 +39,23 @@ class CustomerServiceImplTest {
 
 	@Test
 	void testSave() {
-		when(customerService.saveNewCustomer(any())).thenReturn(testCustomer);
+		when(customerService.save(any())).thenReturn(testCustomer);
 
-		Customer savedCustomer = customerService.saveNewCustomer(any());
+		Customer savedCustomer = customerService.save(any());
 		assertEquals(testCustomer.getId(), savedCustomer.getId());
 
-		verify(customerService, times(1)).saveNewCustomer(any());
+		verify(customerService, times(1)).save(any());
 
 	}
 
 	@Test
 	void testUpdate() {
-		when(customerService.saveNewCustomer(any())).thenReturn(testCustomer);
+		when(customerService.save(any())).thenReturn(testCustomer);
 
-		Customer savedCustomer = customerService.saveNewCustomer(any());
+		Customer savedCustomer = customerService.save(any());
 		assertEquals(testCustomer.getId(), savedCustomer.getId());
 
-		verify(customerService, times(1)).saveNewCustomer(any());
+		verify(customerService, times(1)).save(any());
 
 	}
 
@@ -65,10 +65,10 @@ class CustomerServiceImplTest {
 		Set<Customer> customers = new HashSet<Customer>();
 		customers.add(new Customer().builder().id(1L).address("address 1").build());
 		customers.add(new Customer().builder().id(2L).address("Address 2").build());
-		when(customerService.getAllCustomers()).thenReturn(customers);
+		when(customerService.getAll()).thenReturn(customers);
 
-		assertEquals(2, customerService.getAllCustomers().size());
-		verify(customerService, times(1)).getAllCustomers();
+		assertEquals(2, customerService.getAll().size());
+		verify(customerService, times(1)).getAll();
 	}
 
 	@Test

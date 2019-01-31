@@ -35,7 +35,7 @@ public class CustomerController {
 	public Set<Customer> getAllCustomers(Model model) {
 		log.debug("calling getAllCustomers...");
 
-		return customerService.getAllCustomers();
+		return customerService.getAll();
 	}
 
 	@GetMapping({ "/{id}" })
@@ -49,14 +49,14 @@ public class CustomerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Customer createNewCustomer(@RequestBody Customer newCustomer) {
 		log.debug("saving new customer");
-		return customerService.saveNewCustomer(newCustomer);
+		return customerService.save(newCustomer);
 	}
 
 	@PutMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
 	public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer updateCustomer) {
 		log.debug("update customer with ID: " + id);
-		return customerService.saveCustomerById(id, updateCustomer);
+		return customerService.updateById(id, updateCustomer);
 	}
 
 }

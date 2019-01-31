@@ -3,8 +3,6 @@ package com.toko.maju.services.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import com.toko.maju.domains.v1.Project;
@@ -21,16 +19,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	@Transactional
-	public Project saveNewProject(Project newProject) {
-		return projectRepo.save(newProject);
-	}
-
-	@Override
-	public Set<Project> getAllProjects() {
-		Set<Project> projects = new HashSet<Project>();
-		projectRepo.findAll().forEach(projects::add);
-		return projects;
+	public Project save(Project entity) {
+		return projectRepo.save(entity);
 	}
 
 	@Override
@@ -39,21 +29,26 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project saveProjectById(Long id, Project updated) {
+	public Project updateById(Long id, Project updated) {
 		updated.setId(id);
 		return projectRepo.save(updated);
 	}
 
 	@Override
-	public void delete(Project project) {
-		// TODO Auto-generated method stub
-
+	public void delete(Project entity) {
+		projectRepo.delete(entity);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
+		projectRepo.deleteById(id);
+	}
 
+	@Override
+	public Set<Project> getAll() {
+		Set<Project> projects = new HashSet<Project>();
+		projectRepo.findAll().forEach(projects::add);
+		return projects;
 	}
 
 }

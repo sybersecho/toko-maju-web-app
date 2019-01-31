@@ -19,15 +19,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer saveNewCustomer(Customer newCustomer) {
+	public Customer save(Customer newCustomer) {
 		return customerRepo.save(newCustomer);
-	}
-
-	@Override
-	public Set<Customer> getAllCustomers() {
-		Set<Customer> customers = new HashSet<Customer>();
-		customerRepo.findAll().forEach(customers::add);
-		return customers;
 	}
 
 	@Override
@@ -36,19 +29,28 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer saveCustomerById(Long id, Customer updateCustomer) {
+	public Customer updateById(Long id, Customer updateCustomer) {
 		updateCustomer.setId(id);
 		return customerRepo.save(updateCustomer);
 	}
 
 	@Override
-	public void delete(Customer delete) {
-		customerRepo.delete(delete);
+	public void delete(Customer entity) {
+		customerRepo.delete(entity);
+
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		customerRepo.deleteById(id);
+
+	}
+
+	@Override
+	public Set<Customer> getAll() {
+		Set<Customer> customers = new HashSet<Customer>();
+		customerRepo.findAll().forEach(customers::add);
+		return customers;
 	}
 
 }

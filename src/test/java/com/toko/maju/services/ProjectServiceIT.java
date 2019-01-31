@@ -32,7 +32,7 @@ class ProjectServiceIT {
 	@Transactional
 	void setUp() throws Exception {
 		customer = Customer.builder().id(1L).address("Address").build();
-		customer = customerService.saveNewCustomer(customer);
+		customer = customerService.save(customer);
 		saveProject();
 	}
 
@@ -48,16 +48,16 @@ class ProjectServiceIT {
 	void testFindOne() {
 //		saveProject();
 
-		Project found = projectService.getAllProjects().iterator().next();
+		Project found = projectService.getAll().iterator().next();
 
 		assertNotNull(found);
 	}
 
 	private Project saveProject() {
 		Project project = Project.builder().address("address").name("name")
-				.customer(customerService.getAllCustomers().iterator().next()).build();
+				.customer(customerService.getAll().iterator().next()).build();
 
-		project = projectService.saveNewProject(project);
+		project = projectService.save(project);
 		return project;
 	}
 

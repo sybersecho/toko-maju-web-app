@@ -41,7 +41,7 @@ public class ProjectController {
 
 	@GetMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public Project getProjectById(Long id) {
+	public Project getProjectById(@PathVariable Long id) {
 		log.debug("find project wiht id: {}", id);
 		return service.findById(id);
 	}

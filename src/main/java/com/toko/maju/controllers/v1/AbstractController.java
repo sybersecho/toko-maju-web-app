@@ -41,7 +41,7 @@ public abstract class AbstractController<T, ID> {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public T createNewCustomer(@RequestBody T newT) {
+	public T createNewT(@RequestBody T newT) {
 //		log.debug("saving new customer");
 		return service.save(newT);
 	}

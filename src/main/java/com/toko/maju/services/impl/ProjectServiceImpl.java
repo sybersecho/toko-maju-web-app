@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.toko.maju.domains.v1.Project;
+import com.toko.maju.domains.v1.ProjectProduct;
 import com.toko.maju.repositories.ProjectRepo;
 import com.toko.maju.services.ProjectService;
 
@@ -20,7 +21,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project save(Project entity) {
-		return projectRepo.save(entity);
+		return projectRepo.saveAndFlush(entity);
 	}
 
 	@Override
@@ -49,6 +50,13 @@ public class ProjectServiceImpl implements ProjectService {
 		Set<Project> projects = new HashSet<Project>();
 		projectRepo.findAll().forEach(projects::add);
 		return projects;
+	}
+
+	@Override
+	public Set<ProjectProduct> getProjectProducts(Long id) {
+		Set<ProjectProduct> products = new HashSet<ProjectProduct>();
+		projectRepo.getProjectProductById(id).forEach(products::add);
+		return products;
 	}
 
 }

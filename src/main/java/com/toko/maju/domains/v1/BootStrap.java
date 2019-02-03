@@ -1,10 +1,13 @@
 package com.toko.maju.domains.v1;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.toko.maju.services.CustomerService;
+import com.toko.maju.services.ProductService;
 import com.toko.maju.services.ProjectService;
 import com.toko.maju.services.SupplierService;
 
@@ -19,6 +22,8 @@ public class BootStrap implements CommandLineRunner {
 	@SuppressWarnings("unused")
 	@Autowired
 	private final SupplierService supplierService=null;
+	@Autowired
+	private final ProductService productService=null;
 
 	public BootStrap(CustomerService customerService, ProjectService projectService) {
 		this.customerService = customerService;
@@ -27,10 +32,28 @@ public class BootStrap implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		loadCustomer();
-		loadProjects();
 		loadSupplier();
+		loadCustomer();
+		loadProduct();
+		loadProjects();
+	}
 
+	private void loadProduct() {
+		Supplier supplier = supplierService.getAll().iterator().next();
+		Product firstProduct = Product.builder()
+//				.id(1L)
+				.name("Product 1")
+				.build();
+		firstProduct.setSupplier(supplier);
+		productService.save(firstProduct);
+		
+		Product secondProduct = Product.builder()
+//				.id(1L)
+				.name("Product 1")
+				.build();
+		secondProduct.setSupplier(supplier);
+		productService.save(secondProduct);
+		
 	}
 
 	private void loadSupplier() {
@@ -47,10 +70,27 @@ public class BootStrap implements CommandLineRunner {
 	}
 
 	private void loadProjects() {
-		Project project = Project.builder().id(1L).name("Project name").address("Project Address")
-				.customer(customerService.getAll().iterator().next()).build();
-		Project project2 = Project.builder().id(2L).name("Project name 2").address("Project Address 2")
-				.customer(customerService.getAll().iterator().next()).build();
+		Project project = Project.builder()
+//				.id(1L)
+				.name("Project name")
+				.address("Project Address")
+				.customer(customerService.getAll().iterator().next())
+				.build();
+		Project project2 = Project.builder()
+//				.id(2L)
+				.name("Project name 2")
+				.address("Project Address 2")
+				.customer(customerService.getAll().iterator().next())
+				.build();
+		
+		Product firstProduct = productService.findById(1L);
+		Product secondProduct = productService.findById(2L);
+		
+		ProjectProduct pp = new ProjectProduct(project, firstProduct, BigDecimal.TEN);
+		project.getProducts().add(pp);
+		ProjectProduct pp1 = new ProjectProduct(project, secondProduct, BigDecimal.TEN);
+		project.getProducts().add(pp1);
+		
 		log.debug("save project 1");
 		System.out.println("save project 1");
 		projectService.save(project);

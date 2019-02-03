@@ -1,6 +1,6 @@
 package com.toko.maju.repositories;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,14 +18,18 @@ class ProjectRepoIT {
 
 	private final CustomerRepo customerRepo;
 	private final ProjectRepo projectRepo;
+//	@Autowired
+//	private final ProductService productService = null;
 	
 	Customer testCustomer;
 	Project testProject;
 
 	@Autowired
 	public ProjectRepoIT(CustomerRepo customerRepo, ProjectRepo projectRepo) {
+		
 		this.customerRepo = customerRepo;
-		this.projectRepo = projectRepo;
+		this.projectRepo = projectRepo;	
+		
 	}
 
 	@BeforeEach
@@ -42,10 +46,12 @@ class ProjectRepoIT {
 	@Test
 	void testSaveProject() {
 		saveProject();
-		Long id = projectRepo.findAll().get(0).getId();
+		Project returned = projectRepo.findById(1L).orElse(null);
 		
-//		assertEquals(testProject.getId(), id);
-		assertNotNull(id);
+		assertNotNull(returned);
+//		assertEquals(testProject.getId(), returned.getId());
+		
+		assertNotNull(returned.getCustomer());
 		
 	}
 
@@ -56,6 +62,8 @@ class ProjectRepoIT {
 		testProject.setCustomer(testCustomer);
 		
 		testProject = projectRepo.save(testProject);
+		
+		
 	}
 
 }

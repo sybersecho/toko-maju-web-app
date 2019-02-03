@@ -36,6 +36,10 @@ public class Product extends BaseEntity {
 	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;
 
+////	@JsonIgnore
+//	@OneToMany(mappedBy = "project")
+//	private Set<ProjectProduct> projects = new HashSet<ProjectProduct>();
+
 	@Builder
 	public Product(Long id, String barcode, String name, String unit, BigDecimal warehousePrices, BigDecimal unitPrices,
 			BigDecimal sellingPrices, Integer stock) {

@@ -19,18 +19,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toko.maju.domains.v1.Customer;
+import com.toko.maju.response.v1.ResponseUtil;
 import com.toko.maju.services.CustomerService;
 
 class CustomerControllerTest {
 
 	@Mock
 	CustomerService customerService;
+	
+	@Autowired
+	ResponseUtil responseUtil;
 
 	@InjectMocks
 	CustomerController customerController;
@@ -66,8 +71,11 @@ class CustomerControllerTest {
 
 		when(customerService.findById(1L)).thenReturn(customer1);
 
-		mockMvc.perform(get(CustomerController.BASE_URL + "/1").contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.name", equalTo("Customer 1")));
+		mockMvc.perform(get(CustomerController.BASE_URL + "/1")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				//.andReturn().getResponse().getContentAsString();
+				.andExpect(jsonPath("$.data.name", equalTo("Customer 1")));
 
 	}
 
@@ -93,8 +101,10 @@ class CustomerControllerTest {
 
 		when(customerService.updateById(anyLong(), any())).thenReturn(returnCustomer);
 
-		mockMvc.perform(put(CustomerController.BASE_URL + "/1").contentType(MediaType.APPLICATION_JSON)
-				.content(asJsonString(customer1))).andExpect(jsonPath("$.name", equalTo("Customer 1")));
+		mockMvc.perform(put(CustomerController.BASE_URL + "/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(asJsonString(customer1)))
+			.andExpect(jsonPath("$.data.name", equalTo("Customer 1")));
 	}
 	
 	@Test

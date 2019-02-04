@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.toko.maju.response.v1.APIResponse;
+import com.toko.maju.response.v1.ResponseUtil;
 import com.toko.maju.services.IService;
 
 public abstract class AbstractController<T, ID> {
@@ -20,42 +22,47 @@ public abstract class AbstractController<T, ID> {
 
 	public static String BASE_URL = "";
 
+//	@Autowired
+//	protected ResponseUtil responseUtil;
+
 	public AbstractController(IService<T, ID> service) {
 		this.service = service;
 	}
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<T> getAllT() {
+	public APIResponse<Object> getAllT() {
 		List<T> tList = new ArrayList<T>();
 		service.getAll().forEach(tList::add);
-		return tList;
+		
+		return ResponseUtil.successResponse(tList);
 	}
 
 	@GetMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public T getTById(@PathVariable ID id) {
+	public APIResponse<Object> getTById(@PathVariable ID id) {
 //		log.debug("calling getByID: " + id);
-		return service.findById(id);
+		return ResponseUtil.successResponse(service.findById(id));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public T createNewT(@RequestBody T newT) {
+	public APIResponse<Object> createNewT(@RequestBody T newT) {
 //		log.debug("saving new customer");
-		return service.save(newT);
+		return ResponseUtil.successResponse(service.save(newT));
 	}
 
 	@DeleteMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteT(@PathVariable ID id) {
+	public APIResponse<Object>  deleteT(@PathVariable ID id) {
 		service.deleteById(id);
+		return ResponseUtil.successResponse(id);
 	}
 
 	@PutMapping({ "/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public T updateT(@PathVariable ID id, @RequestBody T updateT) {
+	public APIResponse<Object> updateT(@PathVariable ID id, @RequestBody T updateT) {
 //		log.debug("update customer with ID: " + id);
-		return service.updateById(id, updateT);
+		return ResponseUtil.successResponse(service.updateById(id, updateT));
 	}
 }

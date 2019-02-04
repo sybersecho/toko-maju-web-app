@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.toko.maju.domains.v1.Project;
 import com.toko.maju.domains.v1.ProjectProduct;
+import com.toko.maju.response.v1.APIResponse;
+import com.toko.maju.response.v1.ResponseUtil;
 import com.toko.maju.services.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,24 +36,24 @@ public class ProjectController extends AbstractController<Project, Long> {
 
 	@GetMapping({ "/{id}/products" })
 	@ResponseStatus(HttpStatus.OK)
-	public Project getProjectProduct(@PathVariable Long id) {
+	public APIResponse<Object>  getProjectProduct(@PathVariable Long id) {
 		log.info("get product of project by id: {}", id);
 //		List<ProjectProduct> projectProducts = new ArrayList<ProjectProduct>();
 //		service.getProjectProducts(id).forEach(projectProducts::add);
 
-		return service.findById(id);
+		return ResponseUtil.successResponse(service.findById(id));
 	}
 
 	@PostMapping({ "/{id}/products" })
 	@ResponseStatus(HttpStatus.OK)
-	public Project saveProductProject(@PathVariable Long id, @RequestBody Project project) {
-		return service.updateById(id, project);
+	public APIResponse<Object> saveProductProject(@PathVariable Long id, @RequestBody Project project) {
+		return ResponseUtil.successResponse(service.updateById(id, project));
 	}
 
 	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Project createNewT(@RequestBody Project project) {
+	public APIResponse<Object> createNewT(@RequestBody Project project) {
 		log.info("Create new project...");
 		Set<ProjectProduct> products = project.getProducts();
 
@@ -68,7 +70,7 @@ public class ProjectController extends AbstractController<Project, Long> {
 		}
 		
 		log.info("is empty: " + project.getProducts().isEmpty());
-		return service.save(project);
+		return ResponseUtil.successResponse(service.save(project));
 	}
 
 }

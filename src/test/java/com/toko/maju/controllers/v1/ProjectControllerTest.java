@@ -19,12 +19,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toko.maju.domains.v1.Project;
+import com.toko.maju.response.v1.ResponseUtil;
 import com.toko.maju.services.ProjectService;
 
 class ProjectControllerTest {
 
 	@Mock
 	ProjectService service;
+	
+	@Mock
+	ResponseUtil responseutil;
 
 	@InjectMocks
 	ProjectController controller;
